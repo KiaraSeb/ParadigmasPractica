@@ -1,4 +1,4 @@
-from EmpleadoFactory import EmpleadoFactory
+from Empleado import EmpleadoFactory
 from Compañia import Compañia
 from Reporte import ReporteSalario, ReporteHoras
 
