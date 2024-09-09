@@ -1,4 +1,4 @@
-import { Node } from './Node'; // No necesita importar File
+import { Node } from './Node'; 
 
 export class Directory extends Node {
   contents: Map<string, Node>;
