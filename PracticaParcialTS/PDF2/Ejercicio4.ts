@@ -1,4 +1,3 @@
-//Red social con relaciones entre usuarios, grupos y páginas
 class Usuario {
     private relaciones: Relacion[] = [];
 
@@ -40,5 +39,3 @@ usuario1.agregarRelacion(new Relacion("Amistad", usuario2));
 
 // Mostrar las relaciones del usuario1
 usuario1.mostrarRelaciones();
-
-
