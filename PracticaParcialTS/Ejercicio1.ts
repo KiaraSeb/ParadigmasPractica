@@ -1,143 +1,74 @@
-//CONJUNTO, elementos desordeados y no repetidos
-class Conjunto {
-    private elementos: Set<number> = new Set();
+// Clase abstracta base para cualquier Tag
+abstract class Tag {
+    abstract render(): string;
+}
 
-    agregar(elemento: number): void {
-        this.elementos.add(elemento);
+// Clase para el tag <body>
+class BodyTag extends Tag {
+    private elementos: Tag[] = [];
+
+    // Método para agregar tags dentro del body
+    agregarElemento(tag: Tag): void {
+        this.elementos.push(tag);
     }
 
-    mostrar(): Set<number> {
-        return this.elementos;
+    render(): string {
+        // Renderiza el tag <body> y todos los elementos que contiene
+        const contenido = this.elementos.map(tag => tag.render()).join("\n");
+        return `<body>\n${contenido}\n</body>`;
+    }
+}
+
+// Clase para el tag <p> (parrafo)
+class PTag extends Tag {
+    constructor(private texto: string) {
+        super();
+    }
+
+    render(): string {
+        return `<p>${this.texto}</p>`;
+    }
+}
+
+// Clase para el tag <img> (imagen)
+class ImgTag extends Tag {
+    constructor(private href: string) {
+        super();
+    }
+
+    render(): string {
+        return `<img src="${this.href}" />`;
+    }
+}
+
+// Clase para el tag <a> (link)
+class ATag extends Tag {
+    constructor(private href: string, private texto: string) {
+        super();
+    }
+
+    render(): string {
+        return `<a href="${this.href}">${this.texto}</a>`;
     }
 }
 
 // Ejemplo de uso
-const conjunto = new Conjunto();
-conjunto.agregar(1);
-conjunto.agregar(2);
-conjunto.agregar(1);  // No se repite
-console.log(conjunto.mostrar());  // Set { 1, 2 }
 
+// Crear el tag body
+const body = new BodyTag();
 
-//CONJUNTO ORDENADO
-class ConjuntoOrdenado {
-    private elementos: Set<number> = new Set();
+// Agregar un párrafo dentro del body
+body.agregarElemento(new PTag("Este es el examen de poo"));
 
-    agregar(elemento: number): void {
-        this.elementos.add(elemento);
-    }
+// Agregar una imagen dentro del body
+body.agregarElemento(new ImgTag("nombreDeUnaImg.jpg"));
 
-    mostrar(): number[] {
-        return Array.from(this.elementos).sort((a, b) => a - b);
-    }
-}
+// Agregar otro párrafo
+body.agregarElemento(new PTag("Espero que hayas estudiado"));
 
-// Ejemplo de uso
-const conjuntoOrdenado = new ConjuntoOrdenado();
-conjuntoOrdenado.agregar(3);
-conjuntoOrdenado.agregar(1);
-conjuntoOrdenado.agregar(2);
-console.log(conjuntoOrdenado.mostrar());  // [1, 2, 3]
+// Agregar un enlace
+body.agregarElemento(new ATag("http://unlink.html", "texto del link"));
 
-
-//LISTA, elementos no repetidos
-class Lista {
-    private elementos: number[] = [];
-
-    agregar(elemento: number): void {
-        this.elementos.push(elemento);
-    }
-
-    mostrar(): number[] {
-        return this.elementos;
-    }
-}
-
-// Ejemplo de uso
-const lista = new Lista();
-lista.agregar(1);
-lista.agregar(2);
-lista.agregar(1);
-console.log(lista.mostrar());  // [1, 2, 1]
-
-
-//LISTA ORDENADA
-class ListaOrdenada {
-    private elementos: number[] = [];
-
-    agregar(elemento: number): void {
-        this.elementos.push(elemento);
-        this.elementos.sort((a, b) => a - b);
-    }
-
-    mostrar(): number[] {
-        return this.elementos;
-    }
-}
-
-// Ejemplo de uso
-const listaOrdenada = new ListaOrdenada();
-listaOrdenada.agregar(3);
-listaOrdenada.agregar(1);
-listaOrdenada.agregar(2);
-console.log(listaOrdenada.mostrar());  // [1, 2, 3]
-
-
-//VECTOR DINÁMICO
-class VectorDinamico {
-    private elementos: number[] = [];
-
-    agregar(elemento: number): void {
-        this.elementos.push(elemento);
-    }
-
-    obtener(indice: number): number | null {
-        return this.elementos[indice] !== undefined ? this.elementos[indice] : null;
-    }
-}
-
-// Ejemplo de uso
-const vector = new VectorDinamico();
-vector.agregar(5);
-vector.agregar(10);
-console.log(vector.obtener(0));  // 5
-
-
-//PILA (stack)
-class Pila {
-    private elementos: number[] = [];
-
-    apilar(elemento: number): void {
-        this.elementos.push(elemento);
-    }
-
-    desapilar(): number | undefined {
-        return this.elementos.pop();
-    }
-}
-
-// Ejemplo de uso
-const pila = new Pila();
-pila.apilar(1);
-pila.apilar(2);
-console.log(pila.desapilar());  // 2
-
-
-//COLA
-class Cola {
-    private elementos: number[] = [];
-
-    encolar(elemento: number): void {
-        this.elementos.push(elemento);
-    }
-
-    desencolar(): number | undefined {
-        return this.elementos.shift();
-    }
-}
-
-// Ejemplo de uso
-const cola = new Cola();
-cola.encolar(1);
-cola.encolar(2);
-console.log(cola.desencolar());  // 1
+// Generar el HTML completo
+const html = body.render();
+console.log(html);
