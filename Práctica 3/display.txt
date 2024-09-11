@@ -1,0 +1,3 @@
+root/documents/file1.txt
+root/documents/file2.txt
+root/documents/photos/photo1.png
